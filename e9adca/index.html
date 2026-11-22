@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>時計ウィジェット</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    background: #E9ADCA;
+    font-family: "Hiragino Maru Gothic ProN", "Hiragino Sans", "Noto Sans JP", sans-serif;
+    color: #6b4a55;
+    display: flex; align-items: center; justify-content: center;
+    min-height: 100vh;
+  }
+  .wrap { container-type: inline-size; width: 100%; text-align: center; padding: 4cqw 2cqw; }
+  .time { font-size: 19cqw; font-weight: 700; letter-spacing: 0.02em; line-height: 1.1; font-variant-numeric: tabular-nums; }
+  .colon { animation: blink 1s steps(1) infinite; }
+  @keyframes blink { 0%, 60% { opacity: 1; } 61%, 100% { opacity: 0.25; } }
+  .line { width: 62%; height: 2px; background: rgba(107,74,85,0.35); margin: 3.5cqw auto; border-radius: 2px; }
+  .date { font-size: 6.2cqw; font-weight: 600; letter-spacing: 0.08em; transform: translateX(0.3em); }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="time"><span id="hh">00</span><span class="colon">:</span><span id="mm">00</span><span class="colon">:</span><span id="ss">00</span></div>
+    <div class="line"></div>
+    <div class="date" id="date"></div>
+  </div>
+<script>
+  const wd = ['日','月','火','水','木','金','土'];
+  function tick() {
+    const n = new Date();
+    const p = x => String(x).padStart(2,'0');
+    document.getElementById('hh').textContent = p(n.getHours());
+    document.getElementById('mm').textContent = p(n.getMinutes());
+    document.getElementById('ss').textContent = p(n.getSeconds());
+    document.getElementById('date').textContent = n.getFullYear() + '年' + (n.getMonth()+1) + '月' + n.getDate() + '日（' + wd[n.getDay()] + '）';
+  }
+  tick(); setInterval(tick, 250);
+</script>
+</body>
+</html>
